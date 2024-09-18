@@ -1,0 +1,41 @@
+---
+import TasksIcon from "@/icons/TasksIcon.astro";
+import UserAvatarIcon from "@/icons/UserAvatarIcon.astro";
+---
+
+<aside class="py-8">
+    <UserAvatarIcon color="white" width="65" height="65" />
+      <article class="mt-14 flex flex-col gap-4">
+        <ul>
+            <li><a href="/tasks">
+                <TasksIcon color="#fff" width="38" height="38" />
+                Tareas
+            </a></li>
+            <li><a href="/about">Ordenes</a></li>
+            <li><a href="/contact">Finanzas</a></li>
+            <li><a href="/contact">Inventario</a></li>
+            <li><a href="/contact">Clientes</a></li>
+            <br>
+            <li><a href="/logout">Analiticas</a></li>
+            <li><a href="/logout">Reportes</a></li>
+            <li><a href="/logout">Llamadas</a></li>
+            <br>
+            <li><a href="/logout">Ajustes</a></li>
+        </ul>
+      </article>
+</aside>
+
+<style>
+    li {
+        list-style: none;
+    }
+
+    a {
+        text-decoration: none;
+        color: #fff;
+        font-size: 1rem;
+        display: flex;
+        align-items: center;
+        gap: .2rem;
+    }
+</style>
