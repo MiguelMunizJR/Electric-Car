@@ -1,63 +1,35 @@
 ---
-import AnalitycsIcon from "@/icons/AnalitycsIcon.astro";
-import ClientsIcon from "@/icons/ClientsIcon.astro";
-import FinanceIcon from "@/icons/FinanceIcon.astro";
-import InventoryIcon from "@/icons/InventoryIcon.astro";
-import OrdersIcon from "@/icons/OrdersIcon.astro";
-import PhoneIcon from "@/icons/PhoneIcon.astro";
-import ReportsIcon from "@/icons/ReportsIcon.astro";
-import SettingsIcon from "@/icons/SettingsIcon.astro";
-import TasksIcon from "@/icons/TasksIcon.astro";
 import UserAvatarIcon from "@/icons/UserAvatarIcon.astro";
+import { routes } from "@/lib/utils";
 ---
 
 <aside class="py-8">
     <div class="w-24 h-24 mx-auto flex justify-center items-center bg-red-400 rounded-full">
         <UserAvatarIcon color="white" width="65" height="65" />
     </div>
-      <article class="w-full mt-12 flex flex-col gap-4">
+    <article class="w-full mt-12 flex flex-col gap-4">
         <ul>
-            <li><a href="/tasks">
-                <TasksIcon color="#ccc" width="30" height="30" />
-                Tareas
-            </a></li>
-            <li><a href="/orders">
-                <OrdersIcon color="#ccc" width="30" height="30" />
-                Ordenes
-            </a></li>
-            <li><a href="/finances">
-                <FinanceIcon color="#ccc" width="30" height="30" />
-                Finanzas
-            </a></li>
-            <li><a href="/inventory">
-                <InventoryIcon color="#ccc" width="30" height="30" />
-                Inventario
-            </a></li>
-            <li><a href="/clients">
-                <ClientsIcon color="#ccc" width="30" height="30" />
-                Clientes
-            </a></li>
-            <hr>
-            <li><a href="/analytics">
-                <AnalitycsIcon color="#ccc" width="30" height="30" />
-                Analiticas
-            </a></li>
-            <li><a href="/reports">
-                <ReportsIcon color="#ccc" width="30" height="30" />
-                Reportes
-            </a></li>
-            <li><a href="/calls">
-                <PhoneIcon color="#ccc" width="30" height="30" />
-                Llamadas
-            </a></li>
-            <hr>
-            <li><a href="/settings">
-                <SettingsIcon color="#ccc" width="30" height="30" />
-                Ajustes
-            </a></li>
+            {
+                routes.map((route) =>
+                    {
+                        if (route.ICON === "hr") {
+                            return <hr />
+                        }
+                        
+                        return route.PATH &&
+                        <li class="flex items-center gap-2">
+                            <a href={route.PATH} class="flex items-center gap-2">
+                                {route.ICON && <route.ICON color="#ccc" width="30" height="30" />}
+                                <span>{route.NAME}</span>
+                            </a>
+                        </li>
+                    }
+                )
+            }
         </ul>
-      </article>
+    </article>
 </aside>
+
 
 <style>
     li {
@@ -69,11 +41,11 @@ import UserAvatarIcon from "@/icons/UserAvatarIcon.astro";
     a {
         width: 100%;   
         height: 100%; 
-        padding-left: 1.2rem;
+        padding-left: 1rem;
         text-decoration: none;
-        color: #ccc;
-        font-size: 1rem;
-        font-weight: 300;
+        color: #b3b3b3d2;
+        font-size: 15px;
+        font-weight: 400;
         border-left: 4px solid transparent;
         display: flex;
         align-items: center;
@@ -81,7 +53,7 @@ import UserAvatarIcon from "@/icons/UserAvatarIcon.astro";
         
         &:hover {
             background-color: #81818162;
-            border-left-color: #e40202;
+            border-left-color: #d10e0e;
         }
     }
 
