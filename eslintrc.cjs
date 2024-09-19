@@ -22,7 +22,7 @@ module.exports = {
   },
   plugins: ["@typescript-eslint"],
   rules: {
-    indent: ["error", 2],
+    indent: ["error", "tab"],
     "linebreak-style": 0,
     quotes: ["error", "double"],
     semi: ["error", "always"],

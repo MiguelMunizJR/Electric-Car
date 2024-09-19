@@ -1,67 +1,200 @@
 ---
 import UserAvatarIcon from "@/icons/UserAvatarIcon.astro";
 import { routes } from "@/lib/utils";
+
+const { title, details } = Astro.props;
 ---
 
 <aside class="py-8">
-    <div class="w-24 h-24 mx-auto flex justify-center items-center bg-red-400 rounded-full">
-        <UserAvatarIcon color="white" width="65" height="65" />
-    </div>
-    <article class="w-full mt-12 flex flex-col gap-4">
-        <ul>
-            {
-                routes.map((route) =>
+  <div
+    class="w-24 h-24 mx-auto flex justify-center items-center bg-red-400 rounded-full"
+  >
+    <UserAvatarIcon color="white" width="65" height="65" />
+  </div>
+  <article class="w-full mt-12 flex flex-col gap-4">
+    {
+      routes.map((route) => {
+        if (route.ICON === "hr") {
+          return <hr />;
+        }
+
+        return (
+          route.PATH && 
+            <div class="w-full accordion group relative">
+              <button
+                class="accordion__button pr-4 flex w-full justify-between font-medium transition"
+                type="button"
+                id={`${title} accordion menu button`}
+                aria-expanded="false"
+                aria-controls={`${title} accordion menu content`}
+              >
+                <div class="w-full h-full flex items-center gap-2">
+                <route.ICON color="#eee" width="28" height="28" />
+                {route.NAME}
+                </div>
+
+                <svg
+                  class="accordion__chevron h-6 w-6 shrink-0 transition-transform"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="1"
+                    d="m6 9l6 6l6-6"
+                  />
+                </svg>
+              </button>
+
+              <div
+                id={`${title} accordion menu content`}
+                aria-labelledby={`${title} accordion menu button`}
+                class="accordion__content hidden max-h-0 overflow-hidden transition-all duration-300 ease-in-out"
+              >
+                <ul class="accordion__content-list">
+
+                  {
+                    route.LINKS?.map((link: any) =>
                     {
-                        if (route.ICON === "hr") {
-                            return <hr />
-                        }
-                        
-                        return route.PATH &&
-                        <li class="flex items-center gap-2">
-                            <a href={route.PATH} class="flex items-center gap-2">
-                                {route.ICON && <route.ICON color="#ccc" width="30" height="30" />}
-                                <span>{route.NAME}</span>
-                            </a>
-                        </li>
-                    }
-                )
-            }
-        </ul>
-    </article>
+                      if (link.PATH) {
+                        return <a href={link.PATH}>{link.NAME}</a>
+                      }
+                      
+                      return <li><a href="#">{link.NAME}</a></li>
+                    })
+                  }
+                  </ul>
+              </div>
+            </div>
+        );
+      })
+    }
+  </article>
 </aside>
 
-
 <style>
-    li {
-        width: 100%;
-        height: 3rem;
-        list-style: none;
-    }
-    
-    a {
-        width: 100%;   
-        height: 100%; 
-        padding-left: 1rem;
-        text-decoration: none;
-        color: #b3b3b3d2;
-        font-size: 15px;
-        font-weight: 400;
-        border-left: 4px solid transparent;
-        display: flex;
-        align-items: center;
-        gap: .5rem;
-        
-        &:hover {
-            background-color: #81818162;
-            border-left-color: #d10e0e;
-        }
-    }
+  .accordion__button {
+    width: 100%;
+    min-height: 3rem;
+    padding-left: 1rem;
+    text-decoration: none;
+    text-align: left;
+    color: #bbbbbb;
+    font-size: 16px;
+    font-weight: 500;
+    border-left: 6px solid transparent;
+    display: flex;
+    align-items: center;
 
-    hr {
-        margin: 1rem auto;
-        width: 80%;
-        height: 1px;
-        background-color: #cccccc31;
-        border: none;
+    &:hover {
+      background-color: #81818162;
+      border-left-color: #d10e0e;
     }
+  }
+
+  hr {
+    margin: 1rem auto;
+    width: 80%;
+    height: 1px;
+    background-color: #cccccc31;
+    border: none;
+  }
+
+  ul {
+    width: 14rem;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    font-size: 13px;
+    background-color: #121720;
+    gap: .2rem;
+  }
+
+  li {
+    width: 100%;
+    height: 100%;
+    list-style: none;
+  }
+  
+  a {
+    width: 100%;
+    height: 2.5rem;
+    padding-left: 2rem;
+    text-decoration: none;
+    color: #bbbbbb;
+    font-size: 13px;
+    font-weight: 400;
+    border-left: 6px solid transparent;
+    display: flex;
+    align-items: center;
+
+    &:hover {
+      background-color: #81818162;
+      border-left-color: #d10e0e;
+    }
+  }
 </style>
+
+<script>
+  function accordionSetup() {
+    const accordionMenus = document.querySelectorAll(
+      ".accordion",
+    ) as NodeListOf<HTMLElement>;
+    accordionMenus.forEach((accordionMenu) => {
+      const accordionButton = accordionMenu.querySelector(
+        ".accordion__button",
+      ) as HTMLElement;
+      const accordionChevron = accordionMenu.querySelector(
+        ".accordion__chevron",
+      ) as HTMLElement;
+      const accordionContent = accordionMenu.querySelector(
+        ".accordion__content",
+      ) as HTMLElement;
+
+      if (accordionButton && accordionContent && accordionChevron) {
+        accordionButton.addEventListener("click", (event) => {
+          if (!accordionMenu.classList.contains("active")) {
+            // if accordion is currently closed, so open it
+            accordionMenu.classList.add("active");
+            accordionButton.setAttribute("aria-expanded", "true");
+
+            // set max-height to the height of the accordion content
+            // this makes it animate properly
+            accordionContent.classList.remove("hidden");
+            accordionContent.style.maxHeight =
+              accordionContent.scrollHeight + "px";
+            accordionChevron.classList.add("rotate-180");
+          } else {
+            // accordion is currently open, so close it
+            accordionMenu.classList.remove("active");
+            accordionButton.setAttribute("aria-expanded", "false");
+
+            // set max-height to the height of the accordion content
+            // this makes it animate properly
+            accordionContent.style.maxHeight = "0px";
+            accordionChevron.classList.remove("rotate-180");
+            // delay to allow close animation
+            setTimeout(() => {
+              accordionContent.classList.add("hidden");
+            }, 300);
+          }
+          event.preventDefault();
+          return false;
+        });
+      }
+    });
+  }
+
+  // runs on initial page load
+  accordionSetup();
+
+  // runs on view transitions navigation
+  document.addEventListener("astro:after-swap", accordionSetup);
+</script>

@@ -7,12 +7,16 @@
     "start": "astro dev --host",
     "build": "astro check && astro build",
     "preview": "astro preview",
+    "format": "prettier --write .",
+    "lint": "eslint . --ext .js,.ts",
+    "lint:fix": "eslint . --ext .js,.ts --fix",
     "astro": "astro"
   },
   "dependencies": {
     "@astrojs/check": "0.9.3",
     "@astrojs/tailwind": "^5.1.1",
     "astro": "4.15.7",
+    "flowbite": "^2.5.1",
     "tailwindcss": "^3.4.12",
     "typescript": "5.6.2"
   },
@@ -22,6 +26,8 @@
     "eslint": "^9.10.0",
     "eslint-plugin-astro": "^1.2.4",
     "globals": "^15.9.0",
+    "prettier": "^3.3.3",
+    "prettier-plugin-astro": "^0.14.1",
     "typescript-eslint": "^8.6.0"
   }
 }

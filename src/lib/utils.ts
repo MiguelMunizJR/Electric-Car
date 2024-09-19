@@ -1,11 +1,11 @@
 import AnalitycsIcon from "@/icons/AnalitycsIcon.astro";
 import ClientsIcon from "@/icons/ClientsIcon.astro";
+import DashboardIcon from "@/icons/DashboardIcon.astro";
 import FinanceIcon from "@/icons/FinanceIcon.astro";
 import InventoryIcon from "@/icons/InventoryIcon.astro";
 import OrdersIcon from "@/icons/OrdersIcon.astro";
 import PhoneIcon from "@/icons/PhoneIcon.astro";
 import ReportsIcon from "@/icons/ReportsIcon.astro";
-import SettingsIcon from "@/icons/SettingsIcon.astro";
 import TasksIcon from "@/icons/TasksIcon.astro";
 
 const isBrowser = typeof window !== "undefined";
@@ -24,60 +24,70 @@ interface IRoute {
   PATH: string;
   NAME?: string;
   ICON: any;
+  LINKS?: any;
 }
 
 export const routes: readonly IRoute[] = Object.freeze([
   {
-    PATH: "/tasks",
-    NAME: "TASKS",
-    ICON: TasksIcon,
+    PATH: "/",
+    NAME: "MENU",
+    ICON: DashboardIcon,
   },
   {
-    PATH: "/orders",
-    NAME: "ORDERS",
+    PATH: "/tasks",
+    NAME: "REPARACIONES",
+    ICON: TasksIcon,
+    LINKS: [
+      {
+        NAME: "EN CURSO",
+        PATH: "/orders/in-course",
+      },
+      {
+        NAME: "COMPLETADAS",
+        PATH: "/orders/completed",
+      },
+      {
+        NAME: "NUEVA REPARACION",
+        PATH: "null",
+      }
+    ],
+  },
+  {
+    NAME: "REPARACIONES",
     ICON: OrdersIcon,
   },
   {
     PATH: "/finances",
-    NAME: "FINANCES",
+    NAME: "FINANZAS",
     ICON: FinanceIcon,
   },
   {
     PATH: "/inventory",
-    NAME: "INVENTORY",
+    NAME: "CONTROL DE INVENTARIO",
     ICON: InventoryIcon,
   },
   {
     PATH: "/clients",
-    NAME: "CLIENTS",
+    NAME: "CLIENTES",
     ICON: ClientsIcon,
-  },
-  {
-    ICON: "hr",
-    PATH: "null"
-  },
-  {
-    PATH: "/analytics",
-    NAME: "ANALYTICS",
-    ICON: AnalitycsIcon,
-  },
-  {
-    PATH: "/reports",
-    NAME: "REPORTS",
-    ICON: ReportsIcon,
-  },
-  {
-    PATH: "/calls",
-    NAME: "CALLS",
-    ICON: PhoneIcon,
   },
   {
     ICON: "hr",
     PATH: "null",
   },
   {
-    PATH: "/settings",
-    NAME: "SETTINGS",
-    ICON: SettingsIcon,
+    PATH: "/analytics",
+    NAME: "METRICAS",
+    ICON: AnalitycsIcon,
+  },
+  {
+    PATH: "/reports",
+    NAME: "REPORTES",
+    ICON: ReportsIcon,
+  },
+  {
+    PATH: "/calls",
+    NAME: "LLAMADAS",
+    ICON: PhoneIcon,
   },
 ]);
